@@ -44,6 +44,12 @@ def update_workout(id):
 def add_xref():
     return controllers.workout_add_exercise(request)
 
+
+# DELETE xref route
+@workout.route('/workout/exercise', methods=['DELETE'])
+def delete_xref():
+    return controllers.workout_remove_exercise(request)
+
 # workout DELETE route
 
 

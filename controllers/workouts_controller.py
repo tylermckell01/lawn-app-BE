@@ -101,6 +101,23 @@ def workout_add_exercise(req):
 
     return jsonify({'message': 'relationship added.', 'workout info': workout_schema.dump(workout_query)}), 200
 
+
+@auth_admin
+def workout_remove_exercise(req):
+    post_data = req.form if req.form else req.json
+    workout_id = post_data.get('workout_id')
+    exercise_id = post_data.get('exercise_id')
+
+    workout_query = db.session.query(Workouts).filter(Workouts.workout_id == workout_id).first()
+    exercise_query = db.session.query(Exercises).filter(Exercises.exercise_id == exercise_id).first()
+
+    if workout_query and exercise_query:
+        workout_query.exercises.remove(exercise_query)
+        db.session.commit()
+        return jsonify({'message': 'relationship removed', 'results': workout_schema.dump(workout_query)}), 200
+    else:
+        return jsonify({'error': 'workout or exercise not found'}), 404
+
 # workout delete function
 
 
