@@ -17,11 +17,6 @@ def read_all_gyms():
     return controllers.read_gyms(request)
 
 
-@gyms.route('/gym/<id>', methods=['GET'])
-def read_gym_by_id(id):
-    return controllers.read_gym_by_id(request, id)
-
-
 # gym UPDATE route
 @gyms.route('/gym/<id>', methods=['PUT'])
 def update_gym_name_by_id(id):

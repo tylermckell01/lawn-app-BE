@@ -62,11 +62,11 @@ def read_workouts(req):
 #     return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(workout_query)}), 200
 
 
-@auth
-def read_workout_by_id(req, workout_id):
-    workout_query = db.session.query(Workouts).filter(Workouts.workout_id == workout_id).first()
+# @auth
+# def read_workout_by_id(req, workout_id):
+#     workout_query = db.session.query(Workouts).filter(Workouts.workout_id == workout_id).first()
 
-    return jsonify({'message': 'workout found', 'result': workout_schema.dump(workout_query)}), 200
+#     return jsonify({'message': 'workout found', 'result': workout_schema.dump(workout_query)}), 200
 
 
 # workout update functions

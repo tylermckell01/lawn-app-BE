@@ -17,6 +17,9 @@ def create_exercise(req):
     if exists_query:
         return jsonify({'message': f'exercise "{exercise_name}" already exists in the database'}), 400
 
+    if exercise_name == "":
+        return jsonify({'message': f'you must enter a name'}), 400
+
     new_exercise = Exercises.new_exercise_obj()
     populate_object(new_exercise, post_data)
 
@@ -38,16 +41,9 @@ def read_exercises(req):
     return jsonify({'message': 'exercises found', 'result': exercises_schema.dump(exercise_query)}), 200
 
 
-@auth
-def read_by_exercise_id(req, exercise_id):
-    exercise_query = db.session.query(Exercises).filter(Exercises.exercise_id == exercise_id).first()
-
-    return jsonify({'message': 'exercise found', 'result': exercise_schema.dump(exercise_query)}), 200
-
-
 # exercise UPDATE functions
 @auth_admin
-def update_exercise_name(req, exercise_id):
+def update_exercise(req, exercise_id):
     post_data = req.form if req.form else req.json
     exercise_query = db.session.query(Exercises).filter(Exercises.exercise_id == exercise_id).first()
 

@@ -18,15 +18,10 @@ def read_all_exercises():
     return controllers.read_exercises(request)
 
 
-@exercises.route('/exercise/<id>', methods=['GET'])
-def read_by_exercise_id(id):
-    return controllers.read_by_exercise_id(request, id)
-
-
 # exercise UPDATE routes
 @exercises.route('/exercise/<id>', methods=['PUT'])
 def update_exercise_name_by_id(id):
-    return controllers.update_exercise_name(request, id)
+    return controllers.update_exercise(request, id)
 
 
 # exercise DELETE routes

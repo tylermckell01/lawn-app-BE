@@ -42,13 +42,6 @@ def read_gyms(req):
     return jsonify({'message': 'gyms found', 'result': gyms_schema.dump(gym_query)}), 200
 
 
-@auth
-def read_gym_by_id(req, gym_id):
-    gym_query = db.session.query(Gyms).filter(Gyms.gym_id == gym_id).first()
-
-    return jsonify({'message': 'gym found', 'result': gym_schema.dump(gym_query)}), 200
-
-
 # gym UPDATE function
 @auth_admin
 def update_gym_name(req, gym_id):
