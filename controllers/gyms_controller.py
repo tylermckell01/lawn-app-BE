@@ -15,6 +15,9 @@ def create_gym(req):
     gym_name = post_data.get('gym_name')
     exists_query = db.session.query(Gyms).filter(Gyms.gym_name == gym_name).first()
 
+    if gym_name == "":
+        return jsonify({'message': f'you must enter a name'}), 400
+
     if exists_query:
         return jsonify({'message': f'gym "{gym_name}" already exists in the database'}), 400
 

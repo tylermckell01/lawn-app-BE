@@ -39,20 +39,20 @@ def read_workouts(req):
     return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(workout_query)}), 200
 
 
-@auth
-def read_workouts_by_length(req):
-    post_data = req.form if req.form else req.json
+# @auth
+# def read_workouts_by_length(req):
+#     post_data = req.form if req.form else req.json
 
-    length = post_data.get("desired_length_(hrs)")
+#     length = post_data.get("desired_length_(hrs)")
 
-    long_workout_query = db.session.query(Workouts).filter(Workouts.length >= 1).all()
-    short_workout_query = db.session.query(Workouts).filter(Workouts.length < 1).all()
+#     long_workout_query = db.session.query(Workouts).filter(Workouts.length >= 1).all()
+#     short_workout_query = db.session.query(Workouts).filter(Workouts.length < 1).all()
 
-    if length >= 1:
-        return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(long_workout_query)}), 200
+#     if length >= 1:
+#         return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(long_workout_query)}), 200
 
-    else:
-        return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(short_workout_query)}), 200
+#     else:
+#         return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(short_workout_query)}), 200
 
 
 # @auth
