@@ -11,8 +11,6 @@ class Gyms(db.Model):
     gym_id = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     gym_name = db.Column(db.String(), nullable=False, unique=True)
 
-    # workouts = db.relationship("Workouts", foreign_keys="[Workouts.gym_id]", back_populates="gym", cascade="all,delete")
-
     def __init__(self, gym_name):
         self.gym_name = gym_name
 

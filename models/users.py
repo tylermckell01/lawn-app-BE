@@ -16,6 +16,7 @@ class Users(db.Model):
     active = db.Column(db.Boolean(), default=True)
 
     auth = db.relationship("AuthTokens", back_populates="user")
+    workouts = db.relationship("Workouts", back_populates="user", cascade="all")
 
     def __init__(self, first_name, last_name, email, password, role, active):
         self.first_name = first_name
@@ -31,7 +32,8 @@ class Users(db.Model):
 
 class UsersSchema(ma.Schema):
     class Meta:
-        fields = ['user_id', 'first_name', 'last_name', 'role', 'email', 'active']
+        fields = ['user_id', 'first_name', 'last_name', 'role', 'email', 'active', 'workouts']
+    workouts = ma.fields.Nested('WorkoutsSchema', many=True, exclude=['user'])
 
 
 user_schema = UsersSchema()

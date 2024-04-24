@@ -7,18 +7,21 @@ from models.exercises import Exercises
 from util.reflection import populate_object
 
 
-# workouts CREATE functions
 @auth_admin
 def create_workout(req):
     post_data = req.form if req.form else req.json
 
     workout_name = post_data.get('workout_name')
     exists_query = db.session.query(Workouts).filter(Workouts.workout_name == workout_name).first()
+
     if exists_query:
         return jsonify({'message': f'workout "{workout_name}" already exists in the database'}), 400
 
     new_workout = Workouts.new_workout_obj()
     populate_object(new_workout, post_data)
+
+    # new_workout.user_id = auth_info.user.user_id
+    # print(new_workout.user_id)
 
     try:
         db.session.add(new_workout)
@@ -31,7 +34,6 @@ def create_workout(req):
     return jsonify({'message': 'workout created', 'result': workout_schema.dump(new_workout)}), 201
 
 
-# workout read functions
 @auth
 def read_workouts(req):
     workout_query = db.session.query(Workouts).all()
@@ -39,34 +41,10 @@ def read_workouts(req):
     return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(workout_query)}), 200
 
 
-# @auth
-# def read_workouts_by_length(req):
-#     post_data = req.form if req.form else req.json
-
-#     length = post_data.get("desired_length_(hrs)")
-
-#     long_workout_query = db.session.query(Workouts).filter(Workouts.length >= 1).all()
-#     short_workout_query = db.session.query(Workouts).filter(Workouts.length < 1).all()
-
-#     if length >= 1:
-#         return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(long_workout_query)}), 200
-
-#     else:
-#         return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(short_workout_query)}), 200
-
-
-# @auth
-# def read_workouts_by_gym_id(req, gym_id):
-#     workout_query = db.session.query(Workouts).filter(Workouts.gym_id == gym_id).all()
-
-#     return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(workout_query)}), 200
-
-
-# @auth
-# def read_workout_by_id(req, workout_id):
-#     workout_query = db.session.query(Workouts).filter(Workouts.workout_id == workout_id).first()
-
-#     return jsonify({'message': 'workout found', 'result': workout_schema.dump(workout_query)}), 200
+@auth
+def read_workouts_by_user(req, user_id):
+    workout_query = db.session.query(Workouts).filter(Workouts.user_id == user_id).all()
+    return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(workout_query)}), 200
 
 
 # workout update functions
