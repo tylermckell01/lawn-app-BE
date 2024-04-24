@@ -16,7 +16,7 @@ def read_all_exercises():
 
 
 @exercises.route('/exercise/<id>', methods=['PUT'])
-def update_exercise_name_by_id(id):
+def update_exercise_by_id(id):
     return controllers.update_exercise(request, id)
 
 
