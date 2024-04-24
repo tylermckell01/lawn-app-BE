@@ -6,7 +6,6 @@ from models.exercises import Exercises, exercise_schema, exercises_schema
 from util.reflection import populate_object
 
 
-# exercise CREATE functions
 @auth_admin
 def create_exercise(req):
     post_data = req.form if req.form else req.json
@@ -33,7 +32,6 @@ def create_exercise(req):
     return jsonify({'message': 'exercise created', 'result': exercise_schema.dump(new_exercise)}), 201
 
 
-# exercise READ functions
 @auth
 def read_exercises(req):
     exercise_query = db.session.query(Exercises).all()
@@ -41,7 +39,6 @@ def read_exercises(req):
     return jsonify({'message': 'exercises found', 'result': exercises_schema.dump(exercise_query)}), 200
 
 
-# exercise UPDATE functions
 @auth_admin
 def update_exercise(req, exercise_id):
     post_data = req.form if req.form else req.json
@@ -58,7 +55,6 @@ def update_exercise(req, exercise_id):
     return jsonify({'message': 'exercise updated', 'result': exercise_schema.dump(exercise_query)}), 200
 
 
-# exercise DELETE functions
 @auth_admin
 def delete_exercise(req, exercise_id):
     query = db.session.query(Exercises).filter(Exercises.exercise_id == exercise_id).first()

@@ -1,8 +1,5 @@
 from flask import jsonify
 
-# obj = the_actual_record_in_the_db
-# data_dictionary = post_data
-
 
 def populate_object(obj, data_dictionary):
     if data_dictionary is None:

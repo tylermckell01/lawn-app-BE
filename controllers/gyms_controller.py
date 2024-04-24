@@ -5,8 +5,6 @@ from lib.authenticate import auth, auth_admin
 from models.gyms import Gyms, gym_schema, gyms_schema
 from util.reflection import populate_object
 
-# gym CREATE functions
-
 
 @auth_admin
 def create_gym(req):
@@ -34,7 +32,6 @@ def create_gym(req):
     return jsonify({'message': 'gym created', 'result': gym_schema.dump(new_gym)}), 201
 
 
-# gym READ functions
 @auth
 def read_gyms(req):
     gym_query = db.session.query(Gyms).all()
@@ -42,7 +39,6 @@ def read_gyms(req):
     return jsonify({'message': 'gyms found', 'result': gyms_schema.dump(gym_query)}), 200
 
 
-# gym UPDATE function
 @auth_admin
 def update_gym_name(req, gym_id):
     post_data = req.form if req.form else req.json
@@ -59,7 +55,6 @@ def update_gym_name(req, gym_id):
     return jsonify({'message': 'gym updated', 'result': gym_schema.dump(gym_query)}), 200
 
 
-# gym DELETE function
 @auth_admin
 def delete_gym(req, gym_id):
     query = db.session.query(Gyms).filter(Gyms.gym_id == gym_id).first()

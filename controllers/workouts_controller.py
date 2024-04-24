@@ -20,9 +20,6 @@ def create_workout(req):
     new_workout = Workouts.new_workout_obj()
     populate_object(new_workout, post_data)
 
-    # new_workout.user_id = auth_info.user.user_id
-    # print(new_workout.user_id)
-
     try:
         db.session.add(new_workout)
         db.session.commit()
@@ -47,7 +44,6 @@ def read_workouts_by_user(req, user_id):
     return jsonify({'message': 'workouts found', 'result': workouts_schema.dump(workout_query)}), 200
 
 
-# workout update functions
 @auth_admin
 def update_workout_by_id(req, workout_id):
     post_data = req.form if req.form else req.json
@@ -64,7 +60,6 @@ def update_workout_by_id(req, workout_id):
     return jsonify({'message': 'workout updated', 'result': workout_schema.dump(workout_query)}), 200
 
 
-# add workout-exercise-xref record
 @auth_admin
 def workout_add_exercise(req):
     post_data = req.form if req.form else req.json
@@ -95,8 +90,6 @@ def workout_remove_exercise(req):
         return jsonify({'message': 'relationship removed', 'results': workout_schema.dump(workout_query)}), 200
     else:
         return jsonify({'error': 'workout or exercise not found'}), 404
-
-# workout delete function
 
 
 @auth_admin

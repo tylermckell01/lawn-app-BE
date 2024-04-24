@@ -21,7 +21,6 @@ class Gyms(db.Model):
 class GymsSchema(ma.Schema):
     class Meta:
         fields = ['gym_id', 'gym_name', 'workouts']
-    # workouts = ma.fields.Nested('WorkoutsSchema', many=True, exclude=['gym'])
 
 
 gym_schema = GymsSchema()
